@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://bwih0mic2vm4p"]
+[gd_scene load_steps=12 format=3 uid="uid://bwih0mic2vm4p"]
 
+[ext_resource type="Script" path="res://scripts/rookie.gd" id="1_scrm2"]
 [ext_resource type="Texture2D" uid="uid://bpgrjqwpe82uo" path="res://sprites/rookie.png" id="1_xweip"]
+[ext_resource type="Texture2D" uid="uid://g5tw01r43nmg" path="res://sprites/pistol.png" id="3_qsst4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sfwe2"]
 atlas = ExtResource("1_xweip")
@@ -13,6 +15,18 @@ region = Rect2(32, 0, 32, 32)
 [sub_resource type="AtlasTexture" id="AtlasTexture_6mk66"]
 atlas = ExtResource("1_xweip")
 region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1dxp"]
+atlas = ExtResource("1_xweip")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_320ej"]
+atlas = ExtResource("1_xweip")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h6aii"]
+atlas = ExtResource("1_xweip")
+region = Rect2(32, 32, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bgvfb"]
 animations = [{
@@ -30,7 +44,24 @@ animations = [{
 "texture": SubResource("AtlasTexture_sfwe2")
 }],
 "loop": true,
-"name": &"default",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1dxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_320ej")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1dxp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h6aii")
+}],
+"loop": true,
+"name": &"run",
 "speed": 5.0
 }]
 
@@ -39,12 +70,23 @@ size = Vector2(8.5, 15)
 
 [node name="Rookie" type="CharacterBody2D"]
 scale = Vector2(5, 5)
+script = ExtResource("1_scrm2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_bgvfb")
-autoplay = "default"
-frame_progress = 0.310198
+animation = &"run"
+autoplay = "idle"
+frame_progress = 0.486328
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_qepy4")
+
+[node name="WeaponPivot" type="Node2D" parent="."]
+position = Vector2(0, 0.2)
+
+[node name="Glock" type="Sprite2D" parent="WeaponPivot"]
+position = Vector2(8, 0.8)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("3_qsst4")
+flip_h = true
