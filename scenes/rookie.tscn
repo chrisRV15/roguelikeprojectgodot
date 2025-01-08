@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/rookie.gd" id="1_scrm2"]
 [ext_resource type="Texture2D" uid="uid://bpgrjqwpe82uo" path="res://sprites/rookie.png" id="1_xweip"]
-[ext_resource type="Texture2D" uid="uid://g5tw01r43nmg" path="res://sprites/pistol.png" id="3_qsst4"]
+[ext_resource type="PackedScene" uid="uid://e6vxqgh3docf" path="res://scenes/glock.tscn" id="3_p2yqr"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sfwe2"]
 atlas = ExtResource("1_xweip")
@@ -82,11 +82,7 @@ frame_progress = 0.486328
 position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_qepy4")
 
-[node name="WeaponPivot" type="Node2D" parent="."]
-position = Vector2(0, 0.2)
+[node name="Weaponholder" type="Node2D" parent="."]
+position = Vector2(-0.2, 0.2)
 
-[node name="Glock" type="Sprite2D" parent="WeaponPivot"]
-position = Vector2(8, 0.8)
-scale = Vector2(0.6, 0.6)
-texture = ExtResource("3_qsst4")
-flip_h = true
+[node name="glock" parent="Weaponholder" instance=ExtResource("3_p2yqr")]

@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://e6vxqgh3docf"]
+
+[ext_resource type="Texture2D" uid="uid://g5tw01r43nmg" path="res://sprites/pistol.png" id="1_5jmp1"]
+[ext_resource type="Script" path="res://scripts/glock.gd" id="1_jf1xk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tqs76"]
+radius = 61.0082
+
+[node name="glock" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_jf1xk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_tqs76")
+
+[node name="WeaponPivot" type="Marker2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="WeaponPivot"]
+position = Vector2(7, 2)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_5jmp1")
+flip_h = true
