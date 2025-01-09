@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
 
-@onready var weapon_pivot: Node2D = $Weaponholder
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var weaponholder: Node2D = $Weaponholder
+@onready var gun = weaponholder.get_child(0)  
 
 
 const movevement_speed = 300.0
@@ -33,4 +34,13 @@ func _physics_process(delta: float) -> void:
 		animated_sprite.play("run")
 	move_and_slide()
 	
+	
 	##weapon_pivot.look_at(get_global_mouse_position())
+
+func _input(event):
+	if event.is_action_pressed("manual_shoot"):
+		gun.manual_shoot = !gun.manual_shoot
+		if gun.manual_shoot:
+			print("Manual shooting mode activated")
+		else:
+			print("Auto targeting mode activated")
