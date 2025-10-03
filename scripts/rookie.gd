@@ -6,8 +6,9 @@ extends CharacterBody2D
 @onready var gun = weaponholder.get_child(0)  
 
 
-const movevement_speed = 300.0
+const movevement_speed = 150.0
 const direction_speed = 1.2
+var hp = 100
 
 func _physics_process(delta: float) -> void:
 	
@@ -44,3 +45,8 @@ func _input(event):
 			print("Manual shooting mode activated")
 		else:
 			print("Auto targeting mode activated")
+
+
+func _on_hurt_box_hurt(damage: Variant) -> void:
+	hp -= damage
+	print(hp)

@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://bwih0mic2vm4p"]
+[gd_scene load_steps=14 format=3 uid="uid://bwih0mic2vm4p"]
 
 [ext_resource type="Script" path="res://scripts/rookie.gd" id="1_scrm2"]
 [ext_resource type="Texture2D" uid="uid://bpgrjqwpe82uo" path="res://sprites/rookie.png" id="1_xweip"]
 [ext_resource type="PackedScene" uid="uid://e6vxqgh3docf" path="res://scenes/glock.tscn" id="3_p2yqr"]
+[ext_resource type="PackedScene" uid="uid://ds3e4os1d3rcw" path="res://Utility/hurt_box.tscn" id="4_yc1iy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sfwe2"]
 atlas = ExtResource("1_xweip")
@@ -65,11 +66,16 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qepy4"]
-size = Vector2(8.5, 15)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ne436"]
+radius = 2.0
+height = 14.8
 
-[node name="Rookie" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q660y"]
+size = Vector2(16.2, 16.6)
+
+[node name="Rookie" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(5, 5)
+collision_layer = 2130706433
 script = ExtResource("1_scrm2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -80,9 +86,25 @@ frame_progress = 0.486328
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -1)
-shape = SubResource("RectangleShape2D_qepy4")
+shape = SubResource("CapsuleShape2D_ne436")
 
 [node name="Weaponholder" type="Node2D" parent="."]
+visible = false
 position = Vector2(-0.2, 0.2)
 
 [node name="glock" parent="Weaponholder" instance=ExtResource("3_p2yqr")]
+visible = false
+collision_mask = 0
+
+[node name="HurtBox" parent="." instance=ExtResource("4_yc1iy")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(-0.1, -1.2)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_q660y")
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HurtBox"]

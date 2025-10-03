@@ -1,0 +1,50 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2g8wkcpy1dcf"]
+
+[ext_resource type="Texture2D" uid="uid://bj1rjcpgds0a" path="res://sprites/enemies/FlyingEyeball.png" id="1_ctagl"]
+[ext_resource type="Script" path="res://scripts/eye_ball.gd" id="1_r5j1m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1u1u"]
+atlas = ExtResource("1_ctagl")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gemc2"]
+atlas = ExtResource("1_ctagl")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kvv6e"]
+atlas = ExtResource("1_ctagl")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nkyfu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s1u1u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gemc2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kvv6e")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_32fla"]
+radius = 3.0
+height = 10.0
+
+[node name="EyeBall" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_r5j1m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_nkyfu")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -1)
+shape = SubResource("CapsuleShape2D_32fla")

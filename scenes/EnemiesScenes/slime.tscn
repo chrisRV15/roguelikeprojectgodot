@@ -1,0 +1,93 @@
+[gd_scene load_steps=14 format=3 uid="uid://ccaqdvn7rlft3"]
+
+[ext_resource type="Script" path="res://scripts/slime.gd" id="1_2csml"]
+[ext_resource type="Texture2D" uid="uid://c021j6p1kicpc" path="res://sprites/enemies/slime.png" id="2_i0f8w"]
+[ext_resource type="PackedScene" uid="uid://ds3e4os1d3rcw" path="res://Utility/hurt_box.tscn" id="3_iade1"]
+[ext_resource type="PackedScene" uid="uid://klok54watdcl" path="res://Utility/hit_box.tscn" id="4_ajtye"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wp1rh"]
+atlas = ExtResource("2_i0f8w")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vgjeq"]
+atlas = ExtResource("2_i0f8w")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bugw8"]
+atlas = ExtResource("2_i0f8w")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dwlmm"]
+atlas = ExtResource("2_i0f8w")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hjika"]
+atlas = ExtResource("2_i0f8w")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_r73p8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wp1rh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vgjeq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bugw8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dwlmm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hjika")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kj62b"]
+radius = 3.0
+height = 10.4
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e6xut"]
+size = Vector2(15, 14)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ovrvf"]
+size = Vector2(9, 8.5)
+
+[node name="slime" type="CharacterBody2D"]
+script = ExtResource("1_2csml")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, 0)
+sprite_frames = SubResource("SpriteFrames_r73p8")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_kj62b")
+
+[node name="HurtBox" parent="." instance=ExtResource("3_iade1")]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" parent="HurtBox" index="0"]
+position = Vector2(-0.5, 1)
+shape = SubResource("RectangleShape2D_e6xut")
+
+[node name="HitBox" parent="." groups=["attack"] instance=ExtResource("4_ajtye")]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" parent="HitBox" index="0"]
+position = Vector2(-0.5, 1)
+shape = SubResource("RectangleShape2D_ovrvf")
+
+[connection signal="hurt" from="HurtBox" to="." method="_on_hurt_box_hurt"]
+
+[editable path="HurtBox"]
+[editable path="HitBox"]
